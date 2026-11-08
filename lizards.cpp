@@ -27,7 +27,6 @@
 #include <mutex>
 #include <vector>
 #include <semaphore.h>  //LW
-#include <cerrno> // NG
 
 
 using namespace std;
@@ -56,7 +55,7 @@ using namespace std;
  * be simulated.  
  * Try 30 for development and 120 for more thorough testing.
  */
-#define WORLDEND             30
+#define WORLDEND             180
 
 /*
  * Number of lizard threads to create
@@ -142,7 +141,7 @@ class Cat {
 Cat::Cat (int id)
 {
 	_id = id;
-    _catThread = nullptr; // NG
+  _catThread = nullptr; // NG
 }
 
 /**
@@ -236,8 +235,8 @@ void Cat::catThread (Cat *aCat)
 
 
 		/*
-	     * Check for too many lizards crossing
-	     */
+	   * Check for too many lizards crossing
+	   */
     countLock.lock();   //LW
 		if (numCrossingSago2MonkeyGrass + numCrossingMonkeyGrass2Sago > MAX_LIZARD_CROSSING)
 		{
@@ -284,6 +283,7 @@ class Lizard {
 Lizard::Lizard (int id)
 {
 	_id = id;
+  _aLizard = NULL; //LW
 }
 
 /**
@@ -399,10 +399,11 @@ void Lizard::crossSago2MonkeyGrass()
 	 */
   countLock.lock();   //LW
 	numCrossingSago2MonkeyGrass++;
+  if (debug) printf("Lizards crossing: %d\n", numCrossingSago2MonkeyGrass + numCrossingMonkeyGrass2Sago); // NG
 
 	/*
-     * Check for lizards cross both ways
-     */
+   * Check for lizards cross both ways
+   */
 	if (numCrossingMonkeyGrass2Sago && UNIDIRECTIONAL)
     {
 		cout << "\tCrash!  We have a pile-up on the concrete." << endl;
