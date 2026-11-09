@@ -7,6 +7,9 @@ all: lizards
 lizards: lizards.cpp
 	$(CXX) $(CXXFLAGS) lizards.cpp -o lizards $(LDFLAGS)
  
+lizardsUni: lizardsUni.cpp
+	$(CXX) $(CXXFLAGS) lizardsUni.cpp -o lizardsUni $(LDFLAGS)
+
 clean:
-	rm -f lizards
+	rm -f lizards lizardsUni
  
